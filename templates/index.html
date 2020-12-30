@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <h1>{{testVariable}}!</h1>
+        <img src="{{imageUrl}}" alt="Italian Trulli">
+        <form method="POST">
+            {{ form.csrf_token }}
+            {{ form.player1.label }} {{ form.player1(size=20) }}<br>
+            {{ form.player2.label }} {{ form.player2(size=20) }}<br>
+            {{ form.player3.label }} {{ form.player3(size=20) }}<br>
+            {{ form.player4.label }} {{ form.player4(size=20) }}<br>
+            {{ form.player5.label }} {{ form.player5(size=20) }}<br>
+            {{ form.time.label }} {{ form.time(size=20) }}<br>
+            {{ form.theme.label }} {{ form.theme }}<br>
+
+            <input type="submit" value="Go">
+        </form>
+    </body>
+</html>
