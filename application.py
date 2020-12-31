@@ -2,7 +2,8 @@ import os
 from flask import Flask, render_template, escape, request, redirect, abort
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, ValidationError
+import re
 
 import jsonFunctions
 import winterfaceDB
@@ -13,12 +14,32 @@ SECRET_KEY = os.urandom(32)
 application.config['SECRET_KEY'] = SECRET_KEY
 
 class MyForm(FlaskForm):
-    player1 = StringField('player1', validators=[DataRequired()])
-    player2 = StringField('player2', validators=[DataRequired()])
-    player3 = StringField('player3', validators=[DataRequired()])
-    player4 = StringField('player4', validators=[DataRequired()])
-    player5 = StringField('player5', validators=[DataRequired()])
-    time = StringField('time', validators=[DataRequired()])
+    def validateRSN(FlaskForm, field, message = None):
+        rsn = field.data
+        if len(rsn) < 1 or len(rsn) > 12:
+            raise ValidationError('RSN must be between 1 and 12 characters long.')
+
+        if not rsn.isalnum() or "_" in rsn or "-" in rsn:
+            raise ValidationError('RSN cannot contain special characterss.')
+    
+        return True
+    
+    def validateTime(FlaskForm, field, message = None):
+        timeData = field.data
+        if len(timeData) != 8:
+            raise ValidationError('Time must be 8 characters, in the form: xx:yy:zz. Include leading zeros and commas.')
+
+        if re.search('[a-zA-Z]', timeData):
+            raise ValidationError('Time cannot have letters in it. Submit in the form: xx:yy:zz. Include leading zeros and commas.')
+    
+        return True
+        
+    player1 = StringField('player1', validators=[DataRequired(), validateRSN])
+    player2 = StringField('player2', validators=[DataRequired(), validateRSN])
+    player3 = StringField('player3', validators=[DataRequired(), validateRSN])
+    player4 = StringField('player4', validators=[DataRequired(), validateRSN])
+    player5 = StringField('player5', validators=[DataRequired(), validateRSN])
+    time = StringField('time', validators=[DataRequired(), validateTime])
     theme = SelectField(
         'Theme', choices=[('Frozen', 'Frozen'), ('Abandoned 1', 'Abandoned 1'), ('Furnished', 'Furnished'),('Abandoned 2', 'Abandoned 2'),('Occult', 'Occult'),('Warped', 'Warped')]
     )
@@ -37,7 +58,6 @@ def index():
 @application.route("/<wintNumber>", methods=('GET','POST'))
 def eb(wintNumber):
     form = MyForm()
-    # data = getData(wintNumber)
     secretValue = wintNumber[-32:]
     floorID = wintNumber[:-32]
     testVariable = "yea"
