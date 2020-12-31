@@ -9,20 +9,13 @@ def makeConn():
     password = os.getenv('MYSQL_PASSWORD')
     host = os.getenv('MYSQL_HOST')
     port = os.getenv('MYSQL_PORT')
-    print ("user",user)
-    print ("password",password)
-    print ("host",host)
-    print ("post",port)
 
-
-    print ("pre connection")
     conn = mysql.connector.connect(user=user
                             ,password=password
                             ,host=host
                             ,port=port
                             ,database='DGS_Hiscores'
                             ,use_pure=True)
-    print ("post connection")
     return conn
 
 def uploadToDB( playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime,imageLink,secretValue):
@@ -63,22 +56,14 @@ def retrieveFloor(floorID):
 
 def retrieveFloor2(floorID):
     #connect to DB
-    print ("58")
     conn = makeConn()
-    print ("60")
     query_string = "SELECT * FROM submission_raw WHERE floorID = {};".format(int(floorID))
     try:
-        print ("62")
         cursor = conn.cursor()
-        print ("64")
         cursor.execute(query_string)
-        print ("66")
         data = cursor.fetchall()
-        print ("68")
         cursor.close()
-        print ("70")
         conn.commit()
-        print ("72")
     finally:
         conn.close()
         return data

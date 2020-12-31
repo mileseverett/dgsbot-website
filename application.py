@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, escape, request, redirect
+from flask import Flask, render_template, escape, request, redirect, abort
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired
@@ -41,13 +41,12 @@ def eb(wintNumber):
     secretValue = wintNumber[-32:]
     floorID = wintNumber[:-32]
     testVariable = "yea"
-    # data = winterfaceDB.retrieveFloor2("66")
-    # secret = winterfaceDB.retrieveFloor("66")
+    # ---------- TODO debugging for 404 page, i added in this check to 404 instead of 500 fail.. i think we need a more robust way to handle this? ------------#
+    # -- Maybe a DB check that's like hey is this URL in the table? If not, server error? Not totally robust if website if used for more stuff later.. -- #
+    if not floorID:
+        abort(404)
     data = winterfaceDB.retrieveFloor2(floorID)
     secret = winterfaceDB.retrieveFloor(floorID)
-    # if secretValue == secret[0][2]:
-    print (secret)
-    print (data)
     wintNumberPath = wintNumber + ".png"
     full_filename = os.path.join(application.config['UPLOAD_FOLDER'], wintNumberPath)
     if request.method == 'GET':
@@ -77,7 +76,6 @@ def dumpData(wintNumber,data):
     return
 
 def populateForm(form,data):
-    print (data)
     form.player1.data = data[0][1]
     form.player2.data = data[0][2]
     form.player3.data = data[0][3]
@@ -95,9 +93,16 @@ PEOPLE_FOLDER = os.path.join('static', 'images')
 
 application.config['UPLOAD_FOLDER'] = PEOPLE_FOLDER
 
+@application.errorhandler(404)
+def page_not_found(e):
+    return render_template('404page.html'), 404
+
+@application.errorhandler(500)
+def application_error(e):
+    return render_template('500page.html'), 500
 
 if __name__ == "__main__":
     # Setting debug to True enables debug output. This line should be
     # removed before deploying a production app.
-    application.debug = True
+    application.debug = False
     application.run()
