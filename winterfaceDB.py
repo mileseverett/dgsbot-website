@@ -105,4 +105,12 @@ def updateFloor(floorID,playerOne,playerTwo,playerThree,playerFour,playerFive,en
     finally:
         if (conn.is_connected()):
             conn.close()
-            print("MySQL connection is closed") 
+            print("MySQL connection is closed")
+
+def grabTopNAppearances(n = 10):
+    conn = makeConn()
+    cursor = conn.cursor()
+    query_string = "select player, appearances from playerAppearances order by appearances desc"
+    cursor.execute(query_string)
+    topn = cursor.fetchmany(n, dictionary = True)
+    return topn
