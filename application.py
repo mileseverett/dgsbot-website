@@ -58,14 +58,16 @@ def eb(wintNumber):
     form = MyForm()
     secretValue = wintNumber[-32:]
     floorID = wintNumber[:-32]
-    testVariable = "yea"
-    # ---------- TODO debugging for 404 page, i added in this check to 404 instead of 500 fail.. i think we need a more robust way to handle this? ------------#
-    # -- Maybe a DB check that's like hey is this URL in the table? If not, server error? Not totally robust if website if used for more stuff later.. -- #
+    testVariable = "yea" # ? wtf is this
+    print("d")
+    # TODO debugging for 404 page, i added in this check to 404 instead of 500 fail.. i think we need a more robust way to handle this?
+    # Maybe a DB check that's like hey is this URL in the table? If not, server error? Not totally robust if website is used for more stuff later.. #
     if not floorID:
         abort(404)
     data = winterfaceDB.retrieveFloorRaw(floorID)
     secret = winterfaceDB.retrieveFloorStatus(floorID)
     wintNumberPath = wintNumber + ".png"
+    print("a")
     full_filename = os.path.join(application.config['UPLOAD_FOLDER'], wintNumberPath)
     if request.method == 'GET':
         form = populateForm(form,data)
@@ -122,5 +124,5 @@ def application_error(e):
 if __name__ == "__main__":
     # Setting debug to True enables debug output. This line should be
     # removed before deploying a production app.
-    application.debug = False
+    application.debug = True
     application.run()

@@ -18,7 +18,7 @@ def makeConn():
                             ,use_pure=True)
     return conn
 
-def uploadToDB( playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime,imageLink,secretValue):
+def uploadToDB( playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink, secretValue):
     # Connect to DB
     conn = makeConn()
 
@@ -30,8 +30,8 @@ def uploadToDB( playerOne, playerTwo, playerThree, playerFour, playerFive, theme
         cursor.close()
         
         cursor = conn.cursor()
-        print ("INSERT INTO submission_status (floorID, completedInd, websiteLink) values ({}, 0, '{}')".format(floorID,secretValue))
-        cursor.execute("INSERT INTO submission_status (floorID, completedInd, websiteLink) values ({}, 0, '{}')".format(floorID,secretValue))
+        print ("INSERT INTO submission_status (floorID, userCompletedInd, adminReviewInd, websiteLink, submitterID) values ({}, 0, 0, '{}', 12)".format(floorID,secretValue))
+        cursor.execute("INSERT INTO submission_status (floorID, userCompletedInd, adminReviewInd, websiteLink, submitterID) values ({}, 0, 0, '{}', 12)".format(floorID,secretValue))
         conn.commit()
     finally:
         cursor.close()
@@ -86,7 +86,7 @@ def retrieveCompleted(completedInd):
 def updateSubmissionStatus(floorID,completedInd):
     conn = makeConn()
 
-    query_string = "UPDATE submission_status set completedInd = 1 WHERE floorID = {};".format(int(floorID))
+    query_string = "UPDATE submission_status set userCompletedInd = 1 WHERE floorID = {};".format(int(floorID))
     try:
         cursor = conn.cursor()
         cursor.execute(query_string)
