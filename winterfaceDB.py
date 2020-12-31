@@ -114,3 +114,11 @@ def grabTopNAppearances(n = 10):
     cursor.execute(query_string)
     topn = cursor.fetchmany(n, dictionary = True)
     return topn
+
+def grabTopNByTheme(theme, n = 10):
+    conn = makeConn()
+    cursor = conn.cursor()
+    query_string = "select * from DGS_Hiscores.submission_accepted where theme = '{}' order by endTime".format(str(theme))
+    cursor.execute(query_string)
+    topn = cursor.fetchmany(n, dictionary = True)
+    return topn
