@@ -39,7 +39,7 @@ def uploadToDB( playerOne, playerTwo, playerThree, playerFour, playerFive, theme
 
     return True, floorID
 
-def retrieveFloor(floorID):
+def retrieveFloorStatus(floorID):
     #connect to DB
     conn = makeConn()
 
@@ -54,7 +54,7 @@ def retrieveFloor(floorID):
         conn.close()
         return data
 
-def retrieveFloor2(floorID):
+def retrieveFloorRaw(floorID):
     #connect to DB
     conn = makeConn()
     query_string = "SELECT * FROM submission_raw WHERE floorID = {};".format(int(floorID))

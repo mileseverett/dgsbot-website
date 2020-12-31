@@ -46,8 +46,6 @@ class MyForm(FlaskForm):
 
 @application.route("/")
 def index():
-
-    # Use os.getenv("key") to get environment variables
     app_name = os.getenv("APP_NAME")
 
     if app_name:
@@ -65,8 +63,8 @@ def eb(wintNumber):
     # -- Maybe a DB check that's like hey is this URL in the table? If not, server error? Not totally robust if website if used for more stuff later.. -- #
     if not floorID:
         abort(404)
-    data = winterfaceDB.retrieveFloor2(floorID)
-    secret = winterfaceDB.retrieveFloor(floorID)
+    data = winterfaceDB.retrieveFloorRaw(floorID)
+    secret = winterfaceDB.retrieveFloorStatus(floorID)
     wintNumberPath = wintNumber + ".png"
     full_filename = os.path.join(application.config['UPLOAD_FOLDER'], wintNumberPath)
     if request.method == 'GET':
@@ -82,7 +80,7 @@ def adminPage():
     data = winterfaceDB.retrieveCompleted(1)
     floors = []
     for x in data:
-        floors.append(winterfaceDB.retrieveFloor2(x[0]))
+        floors.append(winterfaceDB.retrieveFloorRaw(x[0]))
     return render_template('adminPage.html',options=floors)
 
 def getData(wintNumber):
