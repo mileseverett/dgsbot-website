@@ -68,10 +68,10 @@ def retrieveFloorRaw(floorID):
         conn.close()
         return data
 
-def retrieveCompleted(completedInd):
+def retrieveCompleted():
     #connect to DB
     conn = makeConn()
-    query_string = "SELECT * FROM submission_status WHERE completedInd = '{}';".format(int(completedInd))
+    query_string = "SELECT * FROM reviewFloors"
     try:
         cursor = conn.cursor()
         cursor.execute(query_string)
@@ -82,8 +82,7 @@ def retrieveCompleted(completedInd):
         conn.close()
         return data
 
-
-def updateSubmissionStatus(floorID,completedInd):
+def updateSubmissionStatus(floorID, completedInd):
     conn = makeConn()
 
     query_string = "UPDATE submission_status set userCompletedInd = 1 WHERE floorID = {};".format(int(floorID))

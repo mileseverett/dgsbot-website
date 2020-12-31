@@ -77,24 +77,6 @@ def eb(wintNumber):
         winterfaceDB.updateSubmissionStatus(floorID,1)
         return render_template('index.html',title="DGS Highscores",testVariable="Details updated!",imageUrl=data[0][8],defaultValue=testVariable,form=form)
 
-@application.route("/adminPage",methods=('GET','POST'))
-def adminPage():
-    data = winterfaceDB.retrieveCompleted(1)
-    floors = []
-    for x in data:
-        floors.append(winterfaceDB.retrieveFloorRaw(x[0]))
-    return render_template('adminPage.html',options=floors)
-
-def getData(wintNumber):
-    wintNumberPath = "app/jsonFiles/" + wintNumber + ".json"
-    print (wintNumberPath)
-    return jsonFunctions.loadJSON(wintNumberPath)
-
-def dumpData(wintNumber,data):
-    wintNumberPath = "app/jsonFiles/" + wintNumber + ".json"
-    jsonFunctions.dumpJSON(wintNumberPath,data)
-    return
-
 def populateForm(form,data):
     form.player1.data = data[0][1]
     form.player2.data = data[0][2]
@@ -104,6 +86,27 @@ def populateForm(form,data):
     form.time.data = data[0][7]
     form.theme.data = data[0][6]
     return form
+
+
+@application.route("/adminPage",methods=('GET','POST'))
+def adminPage():
+    data = winterfaceDB.retrieveCompleted()
+    floors = []
+    for x in data:
+        floors.append(winterfaceDB.retrieveFloorRaw(x[0]))
+    return render_template('adminPage.html',options=floors)
+
+# ? MILES do we need this? Isnt this info coming from db? or is this supposed to be pulling a downloaded pic? (its json?)
+def getData(wintNumber):
+    wintNumberPath = "app/jsonFiles/" + wintNumber + ".json"
+    print (wintNumberPath)
+    return jsonFunctions.loadJSON(wintNumberPath)
+
+# ? MILES do we need this? Isnt this info coming from db? or is this supposed to be pulling a downloaded pic? (its json?)
+def dumpData(wintNumber,data):
+    wintNumberPath = "app/jsonFiles/" + wintNumber + ".json"
+    jsonFunctions.dumpJSON(wintNumberPath,data)
+    return
 
 @application.route("/success", methods=('GET','POST'))
 def success():
