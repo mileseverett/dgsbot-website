@@ -1,9 +1,25 @@
 <html>
 
     <ul>
-        {% for thing in options%}
-          <li>{{ thing }}</li>
-        {% endfor %}  
+      <form method="POST">
+        {% for floor in options%}
+          
+          <p>
+          {{floor.1}} {{floor.2}} {{floor.3}} {{floor.4}} {{floor.5}} {{floor.6}} {{floor.7}}
+          
+          
+          <input type="radio" id="accept" name={{floor.0}} value="accept">
+          <label for="accept">Accept</label>
+          <input type="radio" id="reject" name={{floor.0}} value="reject">
+          <label for="reject">Reject</label>
+          <input type="radio" id="none" name={{floor.0}} value="none" checked=True>
+          <label for="none">Do nothing</label>
+          </p>
+          
+        {% endfor %}
+        <br>
+        <input type="submit" value="Submit">
+      </form>
     </ul>
 
 </html>

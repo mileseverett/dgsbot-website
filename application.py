@@ -4,6 +4,9 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired, ValidationError
 import re
+import requests
+from PIL import Image
+import io
 
 import jsonFunctions
 import winterfaceDB
@@ -53,13 +56,25 @@ def index():
 
     return "Hello from Flask"
 
-@application.route("/<wintNumber>", methods=('GET','POST'))
-def eb(wintNumber):
+@application.route("/hiscore", methods=('GET','POST'))
+def highscore():
+    print ("Printing")
+    frozen = winterfaceDB.grabTopNByTheme("Frozen")
+    ab1 = winterfaceDB.grabTopNByTheme("Abandoned 1")
+    furn = winterfaceDB.grabTopNByTheme("Furnished")
+    ab2 = winterfaceDB.grabTopNByTheme("Abandoned 2")
+    occ = winterfaceDB.grabTopNByTheme("Occult")
+    warp = winterfaceDB.grabTopNByTheme("Warped")
+    return render_template('highscores.html',frozen=frozen,ab1=ab1,furn=furn,ab2=ab2,occ=occ,warp=warp)
+
+@application.route("/hiscore/<wintNumber>", methods=('GET','POST'))
+def eb(wintNumber=""):
     form = MyForm()
+    print (wintNumber)
+
+
     secretValue = wintNumber[-32:]
     floorID = wintNumber[:-32]
-    testVariable = "yea" # ? wtf is this
-    print("d")
     # TODO debugging for 404 page, i added in this check to 404 instead of 500 fail.. i think we need a more robust way to handle this?
     # Maybe a DB check that's like hey is this URL in the table? If not, server error? Not totally robust if website is used for more stuff later.. #
     if not floorID:
@@ -67,54 +82,79 @@ def eb(wintNumber):
     data = winterfaceDB.retrieveFloorRaw(floorID)
     secret = winterfaceDB.retrieveFloorStatus(floorID)
     wintNumberPath = wintNumber + ".png"
-    print("a")
-    full_filename = os.path.join(application.config['UPLOAD_FOLDER'], wintNumberPath)
+    fullFilename = os.path.join(application.config["UPLOAD_FOLDER"], wintNumberPath)
+    print (fullFilename)
+    checkForImage(fullFilename,data[0])
+    fullFilename = "/" + fullFilename
+
     if request.method == 'GET':
-        form = populateForm(form,data)
-        return render_template('index.html',title="DGS Highscores",testVariable=data,imageUrl=data[0][8],defaultValue=testVariable,form=form)
+        form = populateForm(form,data[0])
+        return render_template('index.html',title="DGS Highscores",testVariable=data,imageUrl=fullFilename,form=form)
     elif request.method == 'POST':
         winterfaceDB.updateFloor(floorID,form.player1.data,form.player2.data,form.player3.data,form.player4.data,form.player5.data,form.time.data,form.theme.data)
         winterfaceDB.updateSubmissionStatus(floorID,1)
-        return render_template('index.html',title="DGS Highscores",testVariable="Details updated!",imageUrl=data[0][8],defaultValue=testVariable,form=form)
+        return render_template('index.html',title="DGS Highscores",testVariable="Details updated!",imageUrl=fullFilename,form=form)
+
+def checkForImage(fullFilename,data):
+    if os.path.exists(fullFilename) == True:
+        return
+    else:
+        print ("Image does NOT exist")
+        r = requests.get(data[8])
+        image = Image.open(io.BytesIO(r.content))
+        image.save(fullFilename)
+        return
+
 
 def populateForm(form,data):
-    form.player1.data = data[0][1]
-    form.player2.data = data[0][2]
-    form.player3.data = data[0][3]
-    form.player4.data = data[0][4]
-    form.player5.data = data[0][5]
-    form.time.data = data[0][7]
-    form.theme.data = data[0][6]
+    form.player1.data = data[1]
+    form.player2.data = data[2]
+    form.player3.data = data[3]
+    form.player4.data = data[4]
+    form.player5.data = data[5]
+    form.time.data = data[7]
+    form.theme.data = data[6]
     return form
 
+@application.route("/hiscore/admin/<pageID>",methods=('GET','POST'))
+def adminPage(pageID):
+    secretValue = pageID[-32:]
+    sessionID = pageID[:-32]
+    if not sessionID:
+        abort(404)
+    sessionData = winterfaceDB.retrieveAdminPageRaw(sessionID)
+    print (sessionData)
+    if sessionData[0][1] == secretValue:
+        pass
+    else:
+        abort(404)
 
-@application.route("/adminPage",methods=('GET','POST'))
-def adminPage():
-    data = winterfaceDB.retrieveCompleted()
-    floors = []
-    for x in data:
-        floors.append(winterfaceDB.retrieveFloorRaw(x[0]))
-    return render_template('adminPage.html',options=floors)
+    if request.method == "GET":
+        data = winterfaceDB.retrieveCompleted()
+        floors = []
+        return render_template('adminPage.html',options=data)
 
-# ? MILES do we need this? Isnt this info coming from db? or is this supposed to be pulling a downloaded pic? (its json?)
-def getData(wintNumber):
-    wintNumberPath = "app/jsonFiles/" + wintNumber + ".json"
-    print (wintNumberPath)
-    return jsonFunctions.loadJSON(wintNumberPath)
-
-# ? MILES do we need this? Isnt this info coming from db? or is this supposed to be pulling a downloaded pic? (its json?)
-def dumpData(wintNumber,data):
-    wintNumberPath = "app/jsonFiles/" + wintNumber + ".json"
-    jsonFunctions.dumpJSON(wintNumberPath,data)
-    return
+    elif request.method == "POST":
+        values = (request.form.to_dict())
+        if "accept" in values.values():
+            data = winterfaceDB.retrieveCompleted()
+            for x in data:
+                if values[str(x[0])] == "accept":
+                    winterfaceDB.uploadToAcceptedDB(x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[10])
+                    winterfaceDB.updateAdminStatus(x[0])
+                else: 
+                    print (data,"was not accepted")
+        data = winterfaceDB.retrieveCompleted()
+        print (values)
+        return render_template('adminPage.html',options=data)
 
 @application.route("/success", methods=('GET','POST'))
 def success():
     return "All done!"
 
-PEOPLE_FOLDER = os.path.join('static', 'images')
+images = os.path.join('static', 'images')
 
-application.config['UPLOAD_FOLDER'] = PEOPLE_FOLDER
+application.config['UPLOAD_FOLDER'] = images
 
 @application.errorhandler(404)
 def page_not_found(e):

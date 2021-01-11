@@ -1,0 +1,100 @@
+.highscorePic {
+    width: 50%;
+    height: auto;
+}
+
+* {
+    box-sizing: border-box; 
+  }
+  body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    margin: 0;
+  }
+  #main {
+    display: flex;
+    flex: 1;
+  }
+  #main > article {
+    flex: 1;
+  }
+  #main > nav, 
+  #main > aside {
+    flex: 0 0 20vw;
+    background:white;
+  }
+  #main > nav {
+    order: -1;
+  }
+  header, footer {
+    background: white;
+    height: 20vh;
+  }
+  header, footer, article, nav, aside {
+    padding: 1em;
+  }
+
+  #frozen tr:nth-child(even) {
+    background-color: #ccecfb;
+  }
+  #frozen tr:nth-child(odd) {
+    background-color: #99d5f1;
+  }
+  #frozen th {
+    color: black;
+    background-color: white;
+  }
+  
+  #abandoned tr:nth-child(even) {
+    background-color: #f1efb5;
+  }
+  #abandoned tr:nth-child(odd) {
+    background-color: #f1ee99;
+  }
+  #abandoned th {
+    color: black;
+    background-color: white;
+  }
+
+  #furnished tr:nth-child(even) {
+    background-color: #f1bb8f;
+  }
+  #furnished tr:nth-child(odd) {
+    background-color: #f5a05b;
+  }
+  #furnished th {
+    color: black;
+    background-color: white;
+  }
+
+  #occult tr:nth-child(even) {
+    background-color: #856a7f;
+  }
+  #occult tr:nth-child(odd) {
+    background-color: #815177;
+  }
+  #occult th {
+    color: black;
+    background-color: white;
+  }
+
+  #warped tr:nth-child(even) {
+    background-color: #c26e6e;
+  }
+  #warped tr:nth-child(odd) {
+    background-color: #c44c4c;
+  }
+  #warped th {
+    color: black;
+    background-color: white;
+  }
+
+  table {
+    table-layout:fixed;
+    width:100%;
+  }
+
+  td {
+    width:15%;
+  }

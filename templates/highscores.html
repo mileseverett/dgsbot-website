@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ title }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='/styles/maincss.css') }}">
+    </head>
+<body>
+  <div id="main">
+    <article>
+<h1>Frozen</h1>
+<table id="frozen">
+  <th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
+  
+  {% for thing in frozen%}
+  <tr>
+  <td>{{ thing.7 }}</td>
+  <td>{{ thing.2 }}</td>
+  <td>{{ thing.3 }}</td>
+  <td>{{ thing.4 }}</td>
+  <td>{{ thing.5 }}</td>
+  <td>{{ thing.6 }}</td>
+  <td>{{ thing.9 }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<h1>Abandoned 1</h1>
+<table id="abandoned">
+  <th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th>
+  
+  {% for thing in ab1%}
+  <tr>
+  <td>{{ thing.7 }}</td>
+  <td>{{ thing.2 }}</td>
+  <td>{{ thing.3 }}</td>
+  <td>{{ thing.4 }}</td>
+  <td>{{ thing.5 }}</td>
+  <td>{{ thing.6 }}</td>
+  <td>{{ thing.9 }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<h1>Furnished</h1>
+<table id="furnished">
+  <th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th>
+  
+  {% for thing in furn%}
+  <tr>
+  <td>{{ thing.7 }}</td>
+  <td>{{ thing.2 }}</td>
+  <td>{{ thing.3 }}</td>
+  <td>{{ thing.4 }}</td>
+  <td>{{ thing.5 }}</td>
+  <td>{{ thing.6 }}</td>
+  <td>{{ thing.9 }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<h1>Abandoned 2</h1>
+<table id="abandoned">
+  <th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th>
+  
+  {% for thing in ab2%}
+  <tr>
+  <td>{{ thing.7 }}</td>
+  <td>{{ thing.2 }}</td>
+  <td>{{ thing.3 }}</td>
+  <td>{{ thing.4 }}</td>
+  <td>{{ thing.5 }}</td>
+  <td>{{ thing.6 }}</td>
+  <td>{{ thing.9 }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<h1>Occult</h1>
+<table id="occult">
+  <th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th>
+  
+  {% for thing in occ%}
+  <tr>
+  <td>{{ thing.7 }}</td>
+  <td>{{ thing.2 }}</td>
+  <td>{{ thing.3 }}</td>
+  <td>{{ thing.4 }}</td>
+  <td>{{ thing.5 }}</td>
+  <td>{{ thing.6 }}</td>
+  <td>{{ thing.9 }}</td>
+  </tr>
+  {% endfor %}
+</table>
+<h1>Warped</h1>
+<table id="warped">
+  <th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th>
+  {% for thing in warp%}
+  <tr>
+  <td>{{ thing.7 }}</td>
+  <td>{{ thing.2 }}</td>
+  <td>{{ thing.3 }}</td>
+  <td>{{ thing.4 }}</td>
+  <td>{{ thing.5 }}</td>
+  <td>{{ thing.6 }}</td>
+  <td>{{ thing.9 }}</td>
+  </tr>
+  {% endfor %}
+</table>
+</article>
+    <nav></nav>
+    <aside></aside>
+  </div>
+</body> 
+
+
+</html>
