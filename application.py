@@ -89,11 +89,11 @@ def eb(wintNumber=""):
 
     if request.method == 'GET':
         form = populateForm(form,data[0])
-        return render_template('index.html',title="DGS Highscores",testVariable=data,imageUrl=fullFilename,form=form)
+        return render_template('index.html', title="DGS Highscores", testVariable=data, imageUrl=fullFilename, form=form)
     elif request.method == 'POST':
-        winterfaceDB.updateFloor(floorID,form.player1.data,form.player2.data,form.player3.data,form.player4.data,form.player5.data,form.time.data,form.theme.data)
+        winterfaceDB.updateFloor(floorID, form.player1.data, form.player2.data, form.player3.data, form.player4.data, form.player5.data, form.time.data, form.theme.data)
         winterfaceDB.updateSubmissionStatus(floorID,1)
-        return render_template('index.html',title="DGS Highscores",testVariable="Details updated!",imageUrl=fullFilename,form=form)
+        return render_template('index.html', title="DGS Highscores", testVariable="Details updated!", imageUrl=fullFilename, form=form)
 
 def checkForImage(fullFilename,data):
     if os.path.exists(fullFilename) == True:

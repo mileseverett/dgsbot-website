@@ -69,10 +69,10 @@
   }
 
   #occult tr:nth-child(even) {
-    background-color: #856a7f;
+    background-color: #d9b3ff;
   }
   #occult tr:nth-child(odd) {
-    background-color: #815177;
+    background-color: #a06fe8;
   }
   #occult th {
     color: black;
@@ -93,8 +93,14 @@
   table {
     table-layout:fixed;
     width:100%;
+    border: 3px solid black;
+  }
+
+  th {
+    border: 1px solid black;
   }
 
   td {
     width:15%;
+    border: 1px solid black;
   }

@@ -1,6 +1,7 @@
 import mysql.connector
 import os
 from dotenv import load_dotenv
+from pprint import pprint
 
 
 
@@ -43,7 +44,7 @@ def uploadToDB( playerOne, playerTwo, playerThree, playerFour, playerFive, theme
 def uploadToAcceptedDB(playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink,submitterID):
     # Connect to DB
     conn = makeConn()
-    query_string = "INSERT INTO submission_accepted (playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink, submitterID) values ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}','{}')".format(playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink,submitterID)
+    query_string = "INSERT INTO submission_accepted (playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink, submitterID) values ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}','{}')".format(playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink, submitterID)
     print (query_string)
     try:
         cursor = conn.cursor()
@@ -139,7 +140,7 @@ def updateAdminStatus(floorID):
             conn.close()
             print("MySQL connection is closed") 
 
-def updateFloor(floorID,playerOne,playerTwo,playerThree,playerFour,playerFive,endTime,theme):
+def updateFloor(floorID, playerOne, playerTwo, playerThree, playerFour, playerFive, endTime, theme):
     conn = makeConn()
     query_string = "UPDATE submission_raw set playerOne = '{}', playerTwo = '{}', playerThree = '{}', playerFour = '{}', playerFive = '{}', theme = '{}', endTime = '{}' WHERE floorID = {};".format(str(playerOne),str(playerTwo),str(playerThree),str(playerFour),str(playerFive),str(theme),str(endTime),int(floorID))
     try:
@@ -162,8 +163,33 @@ def grabTopNAppearances(n = 10):
 def grabTopNByTheme(theme, n = 10):
     conn = makeConn()
     cursor = conn.cursor()
-    query_string = "select * from DGS_Hiscores.submission_accepted where theme = '{}' order by endTime".format(str(theme))
+    query_string = "select * from DGS_Hiscores.submission_accepted where theme = '{}' order by endTime, acceptedTimestamp".format(str(theme))
     cursor.execute(query_string)
-    # topn = cursor.fetchmany(n, dictionary = True)
     topn = cursor.fetchmany(n)
+    
+    # change dates
+    topn = [list(x) for x in topn]
+
+    for index, item in enumerate(topn):
+        item[7] = str(item[7])[3:]
+        item[9] = item[9].date().strftime('%m/%d/%y')
+        item.append(index + 1)
+
+    return topn
+
+def grabTopNOverall(n = 10):
+    conn = makeConn()
+    cursor = conn.cursor()
+    query_string = "select * from DGS_Hiscores.submission_accepted order by endTime, acceptedTimestamp"
+    cursor.execute(query_string)
+    topn = cursor.fetchmany(n)
+
+    # change dates
+    topn = [list(x) for x in topn]
+
+    for index, item in enumerate(topn):
+        item[7] = str(item[7])[3:]
+        item[9] = item[9].date().strftime('%m/%d/%y')
+        item.append(index + 1)
+
     return topn

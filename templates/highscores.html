@@ -2,103 +2,109 @@
 <html>
     <head>
         <title>{{ title }}</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='/styles/maincss.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/maincss.css') }}">
     </head>
 <body>
   <div id="main">
     <article>
 <h1>Frozen</h1>
 <table id="frozen">
-  <th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
+  <th>Rank</th><th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
   
   {% for floor in frozen%}
   <tr>
-  <td>{{ floor.7 }}</td>
-  <td>{{ floor.1 }}</td>
-  <td>{{ floor.2 }}</td>
-  <td>{{ floor.3 }}</td>
-  <td>{{ floor.4 }}</td>
-  <td>{{ floor.5 }}</td>
-  <td>{{ floor.9 }}</td>
+    <td style="text-align:center">{{ floor.11 }}</td>
+    <td style="text-align:center">{{ floor.7 }}</td>
+    <td style="text-align:center">{{ floor.1 }}</td>
+    <td style="text-align:center">{{ floor.2 }}</td>
+    <td style="text-align:center">{{ floor.3 }}</td>
+    <td style="text-align:center">{{ floor.4 }}</td>
+    <td style="text-align:center">{{ floor.5 }}</td>
+    <td style="text-align:center">{{ floor.9 }}</td>
   </tr>
   {% endfor %}
 </table>
 <h1>Abandoned 1</h1>
 <table id="abandoned">
-  <th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
+  <th>Rank</th><th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
   
   {% for floor in ab1%}
   <tr>
-  <td>{{ floor.7 }}</td>
-  <td>{{ floor.1 }}</td>
-  <td>{{ floor.2 }}</td>
-  <td>{{ floor.3 }}</td>
-  <td>{{ floor.4 }}</td>
-  <td>{{ floor.5 }}</td>
-  <td>{{ floor.9 }}</td>
+    <td style="text-align:center">{{ floor.11 }}</td>
+    <td style="text-align:center">{{ floor.7 }}</td>
+    <td style="text-align:center">{{ floor.1 }}</td>
+    <td style="text-align:center">{{ floor.2 }}</td>
+    <td style="text-align:center">{{ floor.3 }}</td>
+    <td style="text-align:center">{{ floor.4 }}</td>
+    <td style="text-align:center">{{ floor.5 }}</td>
+    <td style="text-align:center">{{ floor.9 }}</td>
   </tr>
   {% endfor %}
 </table>
 <h1>Furnished</h1>
 <table id="furnished">
-  <th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
+  <th>Rank</th><th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
   
   {% for floor in furn%}
   <tr>
-  <td>{{ floor.7 }}</td>
-  <td>{{ floor.1 }}</td>
-  <td>{{ floor.2 }}</td>
-  <td>{{ floor.3 }}</td>
-  <td>{{ floor.4 }}</td>
-  <td>{{ floor.5 }}</td>
-  <td>{{ floor.9 }}</td>
+    <td style="text-align:center">{{ floor.11 }}</td>
+    <td style="text-align:center">{{ floor.7 }}</td>
+    <td style="text-align:center">{{ floor.1 }}</td>
+    <td style="text-align:center">{{ floor.2 }}</td>
+    <td style="text-align:center">{{ floor.3 }}</td>
+    <td style="text-align:center">{{ floor.4 }}</td>
+    <td style="text-align:center">{{ floor.5 }}</td>
+    <td style="text-align:center">{{ floor.9 }}</td>
   </tr>
   {% endfor %}
 </table>
 <h1>Abandoned 2</h1>
 <table id="abandoned">
-  <th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
+  <th>Rank</th><th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
   
   {% for floor in ab2%}
   <tr>
-  <td>{{ floor.7 }}</td>
-  <td>{{ floor.1 }}</td>
-  <td>{{ floor.2 }}</td>
-  <td>{{ floor.3 }}</td>
-  <td>{{ floor.4 }}</td>
-  <td>{{ floor.5 }}</td>
-  <td>{{ floor.9 }}</td>
+    <td style="text-align:center">{{ floor.11 }}</td>
+    <td style="text-align:center">{{ floor.7 }}</td>
+    <td style="text-align:center">{{ floor.1 }}</td>
+    <td style="text-align:center">{{ floor.2 }}</td>
+    <td style="text-align:center">{{ floor.3 }}</td>
+    <td style="text-align:center">{{ floor.4 }}</td>
+    <td style="text-align:center">{{ floor.5 }}</td>
+    <td style="text-align:center">{{ floor.9 }}</td>
   </tr>
   {% endfor %}
 </table>
 <h1>Occult</h1>
 <table id="occult">
-  <th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
+  <th>Rank</th><th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
   
   {% for floor in occ%}
   <tr>
-  <td>{{ floor.7 }}</td>
-  <td>{{ floor.1 }}</td>
-  <td>{{ floor.2 }}</td>
-  <td>{{ floor.3 }}</td>
-  <td>{{ floor.4 }}</td>
-  <td>{{ floor.5 }}</td>
-  <td>{{ floor.9 }}</td>
+    <td style="text-align:center">{{ floor.11 }}</td>
+    <td style="text-align:center">{{ floor.7 }}</td>
+    <td style="text-align:center">{{ floor.1 }}</td>
+    <td style="text-align:center">{{ floor.2 }}</td>
+    <td style="text-align:center">{{ floor.3 }}</td>
+    <td style="text-align:center">{{ floor.4 }}</td>
+    <td style="text-align:center">{{ floor.5 }}</td>
+    <td style="text-align:center">{{ floor.9 }}</td>
   </tr>
   {% endfor %}
 </table>
 <h1>Warped</h1>
 <table id="warped">
-  <th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
+  <th>Rank</th><th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
   {% for floor in warp%}
   <tr>
-  <td>{{ floor.7 }}</td>
-  <td>{{ floor.1 }}</td>
-  <td>{{ floor.2 }}</td>
-  <td>{{ floor.3 }}</td>
-  <td>{{ floor.4 }}</td>
-  <td>{{ floor.5 }}</td>
-  <td>{{ floor.9 }}</td>
+    <td style="text-align:center">{{ floor.11 }}</td>
+    <td style="text-align:center">{{ floor.7 }}</td>
+    <td style="text-align:center">{{ floor.1 }}</td>
+    <td style="text-align:center">{{ floor.2 }}</td>
+    <td style="text-align:center">{{ floor.3 }}</td>
+    <td style="text-align:center">{{ floor.4 }}</td>
+    <td style="text-align:center">{{ floor.5 }}</td>
+    <td style="text-align:center">{{ floor.9 }}</td>
   </tr>
   {% endfor %}
 </table>
