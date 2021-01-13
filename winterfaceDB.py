@@ -172,7 +172,7 @@ def grabTopNByTheme(theme, n = 10):
 
     for index, item in enumerate(topn):
         item[7] = str(item[7])[3:]
-        item[9] = item[9].date().strftime('%m/%d/%y')
+        item[9] = item[9].date().strftime('%b %d, %Y')
         item.append(index + 1)
 
     return topn
