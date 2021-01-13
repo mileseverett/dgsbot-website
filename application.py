@@ -1,14 +1,13 @@
 import os
-from flask import Flask, render_template, escape, request, redirect, abort
+from flask import Flask, render_template, request, abort
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
+from wtforms import StringField, SelectField
 from wtforms.validators import DataRequired, ValidationError
 import re
 import requests
 from PIL import Image
 import io
 
-import jsonFunctions
 import winterfaceDB
 
 application = Flask(__name__)

@@ -1,8 +1,6 @@
 import mysql.connector
 import os
 from dotenv import load_dotenv
-from pprint import pprint
-
 
 
 def makeConn():
@@ -32,7 +30,6 @@ def uploadToDB( playerOne, playerTwo, playerThree, playerFour, playerFive, theme
         cursor.close()
         
         cursor = conn.cursor()
-        print ("INSERT INTO submission_status (floorID, userCompletedInd, adminReviewInd, websiteLink, submitterID) values ({}, 0, 0, '{}', 12)".format(floorID,secretValue))
         cursor.execute("INSERT INTO submission_status (floorID, userCompletedInd, adminReviewInd, websiteLink, submitterID) values ({}, 0, 0, '{}', 12)".format(floorID,secretValue))
         conn.commit()
     finally:
@@ -89,7 +86,6 @@ def retrieveAdminPageRaw(adminID):
     #connect to DB
     conn = makeConn()
     query_string = "SELECT * FROM admin_links WHERE sessionID = {};".format(int(adminID))
-    print (query_string)
     try:
         cursor = conn.cursor()
         cursor.execute(query_string)
