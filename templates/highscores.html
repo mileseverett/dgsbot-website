@@ -7,6 +7,22 @@
 <body>
   <div id="main">
     <article>
+<h1>Overall</h1>
+<table id="overall">
+  <th>Rank</th><th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
+  {% for floor in overall%}
+  <tr>
+    <td style="text-align:center">{{ floor.11 }}</td>
+    <td style="text-align:center">{{ floor.7 }}</td>
+    <td style="text-align:center">{{ floor.1 }}</td>
+    <td style="text-align:center">{{ floor.2 }}</td>
+    <td style="text-align:center">{{ floor.3 }}</td>
+    <td style="text-align:center">{{ floor.4 }}</td>
+    <td style="text-align:center">{{ floor.5 }}</td>
+    <td style="text-align:center">{{ floor.9 }}</td>
+  </tr>
+  {% endfor %}
+</table>
 <h1>Frozen</h1>
 <table id="frozen">
   <th>Rank</th><th>Time</th><th>Player 1</th><th>Player 2</th><th>Player 3</th><th>Player 4</th><th>Player 5</th><th>Date Added</th>
@@ -110,7 +126,18 @@
 </table>
 </article>
     <nav></nav>
-    <aside></aside>
+    <aside>
+      <h1>Apps</h1>
+      <table id="overall">
+        <th>Name</th><th>Appearances</th>
+        {% for floor in people%}
+        <tr>
+          <td style="text-align:center">{{ floor.0 }}</td>
+          <td style="text-align:center">{{ floor.1 }}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </aside>
   </div>
 </body> 
 

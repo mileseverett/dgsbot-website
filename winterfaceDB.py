@@ -157,7 +157,7 @@ def grabTopNAppearances(n = 10):
     cursor = conn.cursor()
     query_string = "select player, appearances from playerAppearances order by appearances desc"
     cursor.execute(query_string)
-    topn = cursor.fetchmany(n, dictionary = True)
+    topn = cursor.fetchmany(n)
     return topn
 
 def grabTopNByTheme(theme, n = 10):

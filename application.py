@@ -60,7 +60,9 @@ def highscore():
     ab2 = winterfaceDB.grabTopNByTheme("Abandoned 2")
     occ = winterfaceDB.grabTopNByTheme("Occult")
     warp = winterfaceDB.grabTopNByTheme("Warped")
-    return render_template('highscores.html',frozen=frozen,ab1=ab1,furn=furn,ab2=ab2,occ=occ,warp=warp)
+    overall = winterfaceDB.grabTopNOverall(10)
+    people = winterfaceDB.grabTopNAppearances(100)
+    return render_template('highscores.html',overall=overall,frozen=frozen,ab1=ab1,furn=furn,ab2=ab2,occ=occ,warp=warp,people=people)
 
 @application.route("/hiscore/<wintNumber>", methods=('GET','POST'))
 def eb(wintNumber=""):
