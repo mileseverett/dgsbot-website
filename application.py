@@ -48,20 +48,33 @@ class MyForm(FlaskForm):
 
 @application.route("/")
 def index():
-    return "Hello from Flask"
+    return "Landing page that needs some buttons... :)"
 
 @application.route("/hiscore", methods=('GET','POST'))
 def highscore():
     print ("Printing")
-    frozen = winterfaceDB.grabTopNByTheme("Frozen")
-    ab1 = winterfaceDB.grabTopNByTheme("Abandoned 1")
-    furn = winterfaceDB.grabTopNByTheme("Furnished")
-    ab2 = winterfaceDB.grabTopNByTheme("Abandoned 2")
-    occ = winterfaceDB.grabTopNByTheme("Occult")
-    warp = winterfaceDB.grabTopNByTheme("Warped")
-    overall = winterfaceDB.grabTopNOverall(10)
-    people = winterfaceDB.grabTopNAppearances(100)
-    return render_template('highscores.html',overall=overall,frozen=frozen,ab1=ab1,furn=furn,ab2=ab2,occ=occ,warp=warp,people=people)
+    frozen = winterfaceDB.grabTopNByTheme("Frozen", tableType = "overall")
+    ab1 = winterfaceDB.grabTopNByTheme("Abandoned 1", tableType = "overall")
+    furn = winterfaceDB.grabTopNByTheme("Furnished", tableType = "overall")
+    ab2 = winterfaceDB.grabTopNByTheme("Abandoned 2", tableType = "overall")
+    occ = winterfaceDB.grabTopNByTheme("Occult", tableType = "overall")
+    warp = winterfaceDB.grabTopNByTheme("Warped", tableType = "overall")
+    overall = winterfaceDB.grabTopNOverall(10, tableType = "overall")
+    people = winterfaceDB.grabTopNAppearances(100, tableType = "overall")
+    return render_template('hiscores.html',overall=overall,frozen=frozen,ab1=ab1,furn=furn,ab2=ab2,occ=occ,warp=warp,people=people)
+
+@application.route("/monthlyhiscore", methods=('GET','POST'))
+def monthlyhighscore():
+    print ("Printing")
+    frozen = winterfaceDB.grabTopNByTheme("Frozen", tableType = "monthly")
+    ab1 = winterfaceDB.grabTopNByTheme("Abandoned 1", tableType = "monthly")
+    furn = winterfaceDB.grabTopNByTheme("Furnished", tableType = "monthly")
+    ab2 = winterfaceDB.grabTopNByTheme("Abandoned 2", tableType = "monthly")
+    occ = winterfaceDB.grabTopNByTheme("Occult", tableType = "monthly")
+    warp = winterfaceDB.grabTopNByTheme("Warped", tableType = "monthly")
+    overall = winterfaceDB.grabTopNOverall(5, tableType = "monthly")
+    people = winterfaceDB.grabTopNAppearances(100, tableType = "monthly")
+    return render_template('monthlyHiscores.html',overall=overall,frozen=frozen,ab1=ab1,furn=furn,ab2=ab2,occ=occ,warp=warp,people=people)
 
 @application.route("/hiscore/<wintNumber>", methods=('GET','POST'))
 def eb(wintNumber=""):

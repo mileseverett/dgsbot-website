@@ -147,18 +147,30 @@ def updateFloor(floorID, playerOne, playerTwo, playerThree, playerFour, playerFi
             conn.close()
             print("MySQL connection is closed")
 
-def grabTopNAppearances(n = 10):
+def grabTopNAppearances(n = 10, tableType = "overall"):
     conn = makeConn()
     cursor = conn.cursor()
-    query_string = "select player, appearances from playerAppearances order by appearances desc"
+    if tableType == "overall":
+        query_string = "select player, appearances from playerAppearances order by appearances desc"
+    elif tableType == "monthly":
+        query_string = "select player, appearances from monthlyAppearances order by appearances desc"
+    else:
+        raise("Unknown table type")
+
     cursor.execute(query_string)
     topn = cursor.fetchmany(n)
     return topn
 
-def grabTopNByTheme(theme, n = 10):
+def grabTopNByTheme(theme, n = 10, tableType = "overall"):
     conn = makeConn()
     cursor = conn.cursor()
-    query_string = "select * from DGS_Hiscores.submission_accepted where theme = '{}' order by endTime, acceptedTimestamp".format(str(theme))
+    if tableType == "overall":
+        query_string = "select * from DGS_Hiscores.submission_accepted where theme = '{}' order by endTime, acceptedTimestamp".format(str(theme))
+    elif tableType == "monthly":
+        query_string = "select * from DGS_Hiscores.monthlyFloors where theme = '{}' order by endTime, acceptedTimestamp".format(str(theme))
+    else:
+        raise("Unknown table type")
+
     cursor.execute(query_string)
     topn = cursor.fetchmany(n)
     
@@ -168,14 +180,20 @@ def grabTopNByTheme(theme, n = 10):
     for index, item in enumerate(topn):
         item[7] = str(item[7])[3:]
         item[9] = item[9].date().strftime('%b %d, %Y')
-        item.append(index + 1)
+        item.insert(11, index + 1)
 
     return topn
 
-def grabTopNOverall(n = 10):
+def grabTopNOverall(n = 10, tableType = "overall"):
     conn = makeConn()
     cursor = conn.cursor()
-    query_string = "select * from DGS_Hiscores.submission_accepted order by endTime, acceptedTimestamp"
+    if tableType == "overall":
+        query_string = "select * from DGS_Hiscores.submission_accepted order by endTime, acceptedTimestamp"
+    elif tableType == "monthly":
+        query_string = "select * from DGS_Hiscores.monthlyFloors order by endTime, acceptedTimestamp"
+    else:
+        raise("Unknown table type")
+
     cursor.execute(query_string)
     topn = cursor.fetchmany(n)
 
@@ -184,7 +202,7 @@ def grabTopNOverall(n = 10):
 
     for index, item in enumerate(topn):
         item[7] = str(item[7])[3:]
-        item[9] = item[9].date().strftime('%m/%d/%y')
-        item.append(index + 1)
+        item[9] = item[9].date().strftime('%b %d, %Y')
+        item.insert(11, index + 1)
 
     return topn
