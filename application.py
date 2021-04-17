@@ -102,7 +102,7 @@ def eb(wintNumber=""):
     elif request.method == 'POST':
         winterfaceDB.updateFloor(floorID, form.player1.data, form.player2.data, form.player3.data, form.player4.data, form.player5.data, form.time.data, form.theme.data)
         winterfaceDB.updateSubmissionStatus(floorID,1)
-        return render_template('index.html', title="DGS Highscores", testVariable="Details updated!", imageUrl=fullFilename, form=form)
+        return render_template('hiscoreCompleted.html')
 
 def checkForImage(fullFilename,data):
     if os.path.exists(fullFilename) == True:
@@ -155,7 +155,7 @@ def adminPage(pageID):
                     print (data,"was not accepted")
         data = winterfaceDB.retrieveCompleted()
         print (values)
-        return render_template('adminPage.html',options=data)
+        return render_template('adminCompleted.html')
 
 @application.route("/success", methods=('GET','POST'))
 def success():
