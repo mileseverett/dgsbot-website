@@ -18,7 +18,7 @@ def makeConn():
                             ,use_pure=True)
     return conn
 
-def uploadToDB( playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink, secretValue):
+def uploadToDB(playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink, secretValue):
     # Connect to DB
     conn = makeConn()
 
@@ -38,15 +38,14 @@ def uploadToDB( playerOne, playerTwo, playerThree, playerFour, playerFive, theme
 
     return True, floorID
 
-def uploadToAcceptedDB(playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink,submitterID):
+def uploadToAcceptedDB(floorID, playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink, submitterID):
     # Connect to DB
     conn = makeConn()
-    query_string = "INSERT INTO submission_accepted (playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink, submitterID) values ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}','{}')".format(playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink, submitterID)
+    query_string = "INSERT INTO submission_accepted (floorID, playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink, submitterID) values ('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}','{}')".format(floorID, playerOne, playerTwo, playerThree, playerFour, playerFive, theme, endTime, imageLink, submitterID)
     print (query_string)
     try:
         cursor = conn.cursor()
         cursor.execute(query_string)
-        floorID = cursor.lastrowid
         cursor.close()
         conn.commit()
     finally:
