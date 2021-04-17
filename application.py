@@ -63,7 +63,7 @@ def highscore():
     people = winterfaceDB.grabTopNAppearances(100, tableType = "overall")
     return render_template('hiscores.html',overall=overall,frozen=frozen,ab1=ab1,furn=furn,ab2=ab2,occ=occ,warp=warp,people=people)
 
-@application.route("/monthlyhiscore", methods=('GET','POST'))
+@application.route("/hiscore/monthly", methods=('GET','POST'))
 def monthlyhighscore():
     print ("Printing")
     frozen = winterfaceDB.grabTopNByTheme("Frozen", tableType = "monthly")
